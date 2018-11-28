@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#080F16</color>
+    <color name="colorPrimaryDark">#080F16</color>
+    <color name="colorAccent">#5294e2</color>
+    <color name="error_text_color">#bcbcbc</color>
+
+    <!-- material color text -->
+    <color name="text_main">#e1eeffff</color>
+    <color name="text_description">#c3eeffff</color>
+
+    <color name="background">#C4E5DC</color>
+    <color name="background_main">#0A131C</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="blue">#1676D1</color>
+    <color name="anilibria">#CF2525</color>
+
+    <!-- item image -->
+    <color name="image_without_palette">#1C1D23</color>
+    <color name="image_without_palette_opacity">#c41c1d23</color>
+
+    <color name="image_white">#c40A131C</color>
+    <color name="image_heh">#c41c1d23</color>
+</resources>
