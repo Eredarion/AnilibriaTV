@@ -30,7 +30,7 @@ class DetailPresenter : MvpPresenter<DetailView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        Log.i("SUKA", "onFirstViewAttach")
+        Log.i("DetailPresenter", "onFirstViewAttach")
         when {
             release != null -> {
                 id = release!!.id
@@ -38,12 +38,12 @@ class DetailPresenter : MvpPresenter<DetailView>() {
                 loadReleaseDetail(release!!.id)
             }
             id != 0 -> loadReleaseDetail(id)
-            else -> Log.d("SUKA", "Null pointer :(")
+            else -> Log.d("DetailPresenter", "Null pointer :(")
         }
     }
 
     private fun loadReleaseDetail(id: Int) {
-        Log.i("SUKA", "loadReleaseDetail")
+        Log.i("DetailPresenter", "loadReleaseDetail")
         mSubscriptionReleases = releaseRepository.getDetailRelease(id)
             .subscribe({ releaseDetail ->
                 viewState.showRelease(releaseDetail)
@@ -55,7 +55,7 @@ class DetailPresenter : MvpPresenter<DetailView>() {
     }
 
     fun reloadReleaseDetail() {
-        Log.i("SUKA", "RELOAD RELEASE + $id")
+        Log.i("DetailPresenter", "RELOAD RELEASE + $id")
         loadReleaseDetail(id)
     }
 
@@ -84,7 +84,7 @@ class DetailPresenter : MvpPresenter<DetailView>() {
 
             jsonEpisodes.put(one)
         }
-        Log.i("SUKA", jsonEpisodes.toString())
+        Log.i("DetailPresenter", jsonEpisodes.toString())
         fromAction {
             val dao = App.database.getEpisodeDao()
             val episodeData = EpisodeData(id, jsonEpisodes.toString())
@@ -104,7 +104,7 @@ class DetailPresenter : MvpPresenter<DetailView>() {
                 (0 until jsonArray.length()).forEach { position ->
                     jsonArray.getJSONObject(position).let {
                         episodes[position].isViewed = it.getBoolean("isViewed")
-                        Log.i("SUKA WTF???", "position = $position view? = ${it.getBoolean("isViewed")}")
+                        Log.i("DetailPresenter", "position = $position view? = ${it.getBoolean("isViewed")}")
                     }
                 }
             }
@@ -115,7 +115,7 @@ class DetailPresenter : MvpPresenter<DetailView>() {
         id = historyData.id
         val item = Release.Item(
             historyData.torrentUpdate,
-            historyData.id!!.toInt(),
+            historyData.id,
             historyData.code,
             historyData.title,
             historyData.torrentLink,
@@ -135,7 +135,7 @@ class DetailPresenter : MvpPresenter<DetailView>() {
         id = favoriteData.id
         val item = Release.Item(
             favoriteData.torrentUpdate,
-            favoriteData.id!!.toInt(),
+            favoriteData.id,
             favoriteData.code,
             favoriteData.title,
             favoriteData.torrentLink,

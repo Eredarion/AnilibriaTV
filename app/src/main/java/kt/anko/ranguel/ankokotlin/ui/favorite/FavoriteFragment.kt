@@ -77,12 +77,12 @@ class FavoriteFragment : MvpAppCompatFragment(),
 
     override fun onItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int): Boolean {
         val item = mAdapter.getItem(position)
-        requireContext().showDialog("Удалить ?")
-            .content("Удалить тайтл из избранного ?")
-            .positiveText("Да")
+        requireContext().showDialog(resources.getString(R.string.delete))
+            .content(resources.getString(R.string.remove_release_from_favorite))
+            .positiveText(resources.getString(R.string.yes))
             .positiveColor(resources.getColor(R.color.anilibria))
             .onPositive { _, _ -> presenter.deleteFavoriteRelease(item!!) }
-            .negativeText("Нет")
+            .negativeText(resources.getString(R.string.no))
             .onNegative { _, _ -> }
             .show()
         return true

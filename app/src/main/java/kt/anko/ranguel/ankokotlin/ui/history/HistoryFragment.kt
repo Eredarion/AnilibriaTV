@@ -79,12 +79,12 @@ class HistoryFragment : MvpAppCompatFragment(),
 
     override fun onItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int): Boolean {
         val item = mAdapter.getItem(position)
-        requireContext().showDialog("Удалить ?")
-            .content("Удалить тайтл из истории ?")
-            .positiveText("Да")
+        requireContext().showDialog(resources.getString(R.string.delete))
+            .content(resources.getString(R.string.remove_release_from_history))
+            .positiveText(resources.getString(R.string.yes))
             .positiveColor(resources.getColor(R.color.anilibria))
             .onPositive { _, _ -> presenter.deleteHistoryRelease(item!!) }
-            .negativeText("Нет")
+            .negativeText(resources.getString(R.string.no))
             .onNegative { _, _ -> }
             .show()
         return true
@@ -98,11 +98,11 @@ class HistoryFragment : MvpAppCompatFragment(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> requireActivity().supportFragmentManager.popBackStack()
-            R.id.delete_all_history -> requireContext().showDialog("Warning!")
-                .content("Delete all history?")
-                .positiveText("Delete")
+            R.id.delete_all_history -> requireContext().showDialog(resources.getString(R.string.carefully))
+                .content(resources.getString(R.string.this_will_delete_the_whole_story))
+                .positiveText(resources.getString(R.string.confirm_deletion))
                 .onPositive { _, _ -> presenter.deleteAll()}
-                .negativeText("Cancel")
+                .negativeText(resources.getString(R.string.cancel))
                 .show()
         }
         return super.onOptionsItemSelected(item)

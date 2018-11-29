@@ -33,7 +33,7 @@ class PosterViewActivity : AppCompatActivity() {
 
         customView = findViewById(R.id.custom_poster)
         if (intent.getStringExtra(IMAGE_PATH) != null) {
-            Log.i("SUKA", "SRC = ${intent.getStringExtra(IMAGE_PATH)}")
+            Log.i("PosterViewActivity", "src = ${intent.getStringExtra(IMAGE_PATH)}")
             val url = "https://www.anilibria.tv${intent.getStringExtra(IMAGE_PATH)}"
             Glide.with(this).load(url).addListener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
@@ -42,7 +42,7 @@ class PosterViewActivity : AppCompatActivity() {
                     target: Target<Drawable>?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    Log.i("SUKA", "FAILED PIZDA ")
+                    Log.i("PosterViewActivity", "fail")
                     return false
                 }
 
@@ -62,7 +62,7 @@ class PosterViewActivity : AppCompatActivity() {
             }).submit()
 
         } else {
-            showToast("Нет картикни :(")
+            showToast(resources.getString(R.string.no_picture))
         }
 
     }

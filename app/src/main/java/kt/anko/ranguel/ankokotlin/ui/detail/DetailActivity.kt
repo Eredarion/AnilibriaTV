@@ -28,6 +28,7 @@ import kt.anko.ranguel.ankokotlin.ui.PosterViewActivity
 import kt.anko.ranguel.ankokotlin.ui.detail.presenter.DetailPresenter
 import kt.anko.ranguel.ankokotlin.ui.detail.presenter.DetailView
 import kt.anko.ranguel.ankokotlin.utils.*
+import java.lang.StringBuilder
 import java.util.*
 
 
@@ -99,25 +100,24 @@ class DetailActivity : MvpAppCompatActivity(), DetailView, BaseQuickAdapter.OnIt
                mFavoriteDao.insert(presenter.prepareFavoriteRelease(presenter.releaseDetail!!))
                runOnUiThread {
                    favoriteButton.setImageResource(R.drawable.ic_favorite)
-                   showToast("Add to favorite")
+                   showToast(resources.getString(R.string.add_to_favorite))
                }
            } else {
                mFavoriteDao.delete(presenter.prepareFavoriteRelease(presenter.releaseDetail!!))
                runOnUiThread {
                    favoriteButton.setImageResource(R.drawable.ic_favorite_disable)
-                   showToast("Removed from favorites")
+                   showToast(resources.getString(R.string.removed_from_favorites))
                }
            }
        }.subscribe()
     }
 
     private fun showEpisodesDialog() {
-        showDialog("Выберите серию:")
+        showDialog(resources.getString(R.string.choose_a_series))
             .adapter(mAdapter, LinearLayoutManager(this))
             .show()
     }
 
-    @SuppressLint("SetTextI18n")
     override fun showRelease(release: ReleaseDetail) {
         mAdapter.setNewData(release.uppod)
         loadingView.visibility = View.INVISIBLE
@@ -127,12 +127,11 @@ class DetailActivity : MvpAppCompatActivity(), DetailView, BaseQuickAdapter.OnIt
         titleRus.text = getRussianTitle(release.title!!)
         titleEng.text = getEnglishTitle(release.title!!)
         description.text = fromHtml(release.description!!)
-        episodeCount.text = "Озвучено: " + release.torrentList!![0].episode
-        Log.i("SUKA", "DOWNLOAD FINISH EPISODE = ${release.torrentList!![0].episode}")
-        genres.text = "Жанр: " + fromHtml(TextUtils.join(", ", release.genres!!))
-        voices.text = "Озвучили: " + fromHtml(TextUtils.join(", ", release.voices!!))
-        season.text = "Сезон: " + fromHtml(TextUtils.join(", ", release.season!!))
-        type.text = "Тип: " + fromHtml(TextUtils.join(", ", release.types!!))
+        episodeCount.text = StringBuilder(resources.getString(R.string.voiced) + release.torrentList!![0].episode)
+        genres.text = printDetails(R.string.genres, release.genres!!)
+        voices.text = printDetails(R.string.voices, release.voices!!)
+        season.text = printDetails(R.string.season, release.season!!)
+        type.text = printDetails(R.string.type, release.types!!)
         presenter.loadWatchedEpisodes(release.uppod!!)
 
         poster.setOnClickListener {
@@ -142,7 +141,9 @@ class DetailActivity : MvpAppCompatActivity(), DetailView, BaseQuickAdapter.OnIt
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    private fun printDetails(resourceString: Int, details: List<String>) =
+        StringBuilder(resources.getString(resourceString) + fromHtml(TextUtils.join(", ", details)))
+
     override fun showPreRelease(release: Release.Item) {
         loadReleasePoster(poster, release.image!!)
         loadReleasePoster(backgroundPoster, release.image!!)
@@ -153,11 +154,11 @@ class DetailActivity : MvpAppCompatActivity(), DetailView, BaseQuickAdapter.OnIt
         titleRus.text = getRussianTitle(release.title!!)
         titleEng.text = getEnglishTitle(release.title!!)
         description.text = fromHtml(release.description!!)
-        episodeCount.text = "Озвучено: " + release.episode!!
-        genres.text = "Жанр: " + fromHtml(TextUtils.join(", ", release.genres!!))
-        voices.text = "Озвучили: " + fromHtml(TextUtils.join(", ", release.voices!!))
-        season.text = "Сезон: " + fromHtml(TextUtils.join(", ", release.season!!))
-        type.text = "Тип: " + fromHtml(TextUtils.join(", ", release.types!!))
+        episodeCount.text = StringBuilder(resources.getString(R.string.voiced) + release.episode)
+        genres.text = printDetails(R.string.genres, release.genres!!)
+        voices.text = printDetails(R.string.voices, release.voices!!)
+        season.text = printDetails(R.string.season, release.season!!)
+        type.text = printDetails(R.string.type, release.types!!)
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
@@ -166,13 +167,13 @@ class DetailActivity : MvpAppCompatActivity(), DetailView, BaseQuickAdapter.OnIt
         mAdapter.getItem(position)!!.isViewed = true
         mAdapter.notifyDataSetChanged()
         presenter.putEpisodes(mAdapter.data)
-        showDialog("Качество:")
+        showDialog(resources.getString(R.string.quality))
             .items(Arrays.asList("SD", "HD"))
             .itemsCallback { _, _, position1, _ ->
                 when (position1) {
                     0 -> playEpisode(data.file)
                     1 -> playEpisode(data.filehd)
-                    else -> showToast("Нет ссылок")
+                    else -> showToast(resources.getString(R.string.no_links))
                 }
             }
             .show()
@@ -201,12 +202,12 @@ class DetailActivity : MvpAppCompatActivity(), DetailView, BaseQuickAdapter.OnIt
     }
 
     override fun showErrorDialog() {
-        showDialog("Error!")
-            .content("An error has occurred! \nReload release?")
-            .positiveText("Reload")
+        showDialog(resources.getString(R.string.error))
+            .content(resources.getString(R.string.an_error_has_occurred))
+            .positiveText(resources.getString(R.string.reload))
             .positiveColorRes(R.color.anilibria)
             .onPositive { _, _ -> presenter.reloadReleaseDetail() }
-            .negativeText("Exit")
+            .negativeText(resources.getString(R.string.exit))
             .negativeColorRes(R.color.anilibria)
             .onNegative { _, _ -> finish() }
             .cancelListener { _ -> finish() }

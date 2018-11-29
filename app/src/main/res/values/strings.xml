@@ -3,4 +3,28 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete">Удалить?</string>
+    <string name="remove_release_from_history">Удалить релиз из истории?</string>
+    <string name="remove_release_from_favorite">Удалить релиз из избранного?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="carefully">Осторожно</string>
+    <string name="this_will_delete_the_whole_story">Это удалит всю историю!</string>
+    <string name="confirm_deletion">Удалить</string>
+    <string name="cancel">Отменить</string>
+    <string name="no_picture">Нет картикни :(</string>
+    <string name="add_to_favorite">Добавлено в избранное</string>
+    <string name="removed_from_favorites">Удалено из избранного</string>
+    <string name="choose_a_series">Выберите серию</string>
+    <string name="voiced">Озвучено: </string>
+    <string name="genres">Жанр: </string>
+    <string name="voices">Озвучили: </string>
+    <string name="season">Сезон: </string>
+    <string name="type">Тип: </string>
+    <string name="quality">Качество:</string>
+    <string name="no_links">Нет ссылок</string>
+    <string name="error">Ошибка</string>
+    <string name="reload">Перезагрузить</string>
+    <string name="exit">Выйти</string>
+    <string name="an_error_has_occurred">Произошла ошибка!\nПерезагрузить релиз?</string>
 </resources>
